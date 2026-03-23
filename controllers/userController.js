@@ -17,18 +17,18 @@ exports.getUsersById=(req,res)=>{
         if(rows.length>0)
             res.json(rows);
         else
-            res.status(404).json({message: 'User not found'});
+            res.status(404).json({message: 'dish not found'});
     });
 };
 
 //Create a new user
 //CRUD - Create
 exports.createUser=(req,res)=>{
-    const {itemName,itemCode,originalPrice,discountPrice}=req.body;
-    const itemImage = req.file ? req.file.filename : 'default.jpg';
+    const {itemName,itemCode,originalPrice,discountPrice,itemImage}=req.body;
     connection.query('INSERT INTO userdata (itemName, itemCode, originalPrice, discountPrice, itemImage) VALUES (?,?,?,?,?)',[itemName,itemCode,originalPrice,discountPrice,itemImage],(err,results)=>{
         if(err) throw err;
-            res.json({message: 'User created succesfully', userId:results.insertId});
+            res.json({message: 'Dish created succesfully', userId:results.insertId});
+        
     });
 };
 
@@ -37,7 +37,7 @@ exports.updateUser=(req,res)=>{
     connection.query('UPDATE userdata SET itemName=?, itemCode=?, originalPrice=?, discountPrice=?, itemImage=? WHERE id=?',[itemName,itemCode,originalPrice,discountPrice,itemImage,id],(err,results)=>{
         if(err) throw err;
         if(results.affectedRows > 0)
-            res.json({message:`User updated succesfully`});
+            res.json({message:`Dish updated succesfully`});
         else
             res.status(404).json({message:'User not found'});
     }); 
